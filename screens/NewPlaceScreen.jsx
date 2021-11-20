@@ -1,19 +1,60 @@
-import React, { useLayoutEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useLayoutEffect, useState } from "react";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { useDispatch } from "react-redux";
+import colors from "../constant/colors";
+import { addPlace } from "../store/Action";
 
-const NewPlaceScreen = ({navigation}) => {
-    useLayoutEffect(() => {
-        navigation.setOptions({
-          title:"Add place",
-        });
-      }, [navigation]);
-    return (
-        <View>
-            <Text>NewPlaceScreen</Text>
-        </View>
-    )
-}
+const NewPlaceScreen = ({ navigation }) => {
+  const [Titlevalue, setTitlevalue] = useState("");
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "Add place",
+    });
+  }, [navigation]);
+  const dispatch = useDispatch();
 
-export default NewPlaceScreen
+  const Savehandler = () => {
+    dispatch(addPlace(Titlevalue));
+    setTitlevalue("");
+    navigation.goBack();
+  };
+  return (
+    <ScrollView>
+      <View style={styles.formContainer}>
+        <Text style={styles.Title}>Title</Text>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Enter the title"
+          value={Titlevalue}
+          onChangeText={(e) => setTitlevalue(e)}
+        />
+        <Button title="Save" color={colors.primary} onPress={Savehandler} />
+      </View>
+    </ScrollView>
+  );
+};
 
-const styles = StyleSheet.create({})
+export default NewPlaceScreen;
+
+const styles = StyleSheet.create({
+  formContainer: {
+    margin: "5%",
+  },
+  Title: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  TextInput: {
+    borderBottomWidth: 1,
+    marginVertical: 10,
+    padding: 10,
+    fontSize: 14,
+  },
+});
