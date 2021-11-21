@@ -8,11 +8,13 @@ import {
   View,
 } from "react-native";
 import { useDispatch } from "react-redux";
+import IMPicker from "../components/ImagePicker";
 import colors from "../constant/colors";
 import { addPlace } from "../store/Action";
 
 const NewPlaceScreen = ({ navigation }) => {
   const [Titlevalue, setTitlevalue] = useState("");
+  const [imageUri, setimageUri] = useState("");
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "Add place",
@@ -21,7 +23,8 @@ const NewPlaceScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const Savehandler = () => {
-    dispatch(addPlace(Titlevalue));
+    dispatch(addPlace(Titlevalue, imageUri));
+    setimageUri("");
     setTitlevalue("");
     navigation.goBack();
   };
@@ -35,6 +38,7 @@ const NewPlaceScreen = ({ navigation }) => {
           value={Titlevalue}
           onChangeText={(e) => setTitlevalue(e)}
         />
+        <IMPicker imageTaken={(image) => setimageUri(image)} />
         <Button title="Save" color={colors.primary} onPress={Savehandler} />
       </View>
     </ScrollView>
