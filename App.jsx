@@ -8,9 +8,11 @@ import PlaceDetailsScreen from "./screens/PlaceDetailsScreen";
 import PlaceListScreen from "./screens/PlaceListScreen";
 import colors from "./constant/colors";
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import Reducers from "./store/Reducers";
+import { init } from "./helpers/db";
+import { fetchdata } from "./store/Action";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,10 @@ const rootReducer = combineReducers({
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
+init()
+  .then(() => console.log("initializing db is successful"))
+  .catch((error) => console.log(error));
 
 export default function App() {
   return (

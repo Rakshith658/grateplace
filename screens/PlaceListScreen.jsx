@@ -1,9 +1,10 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomHeaderButton from "../components/CustomheaderButton";
 import PlaceItem from "../components/PlaceItem";
+import { fetchdata } from "../store/Action";
 
 const PlaceListScreen = ({ navigation }) => {
   useLayoutEffect(() => {
@@ -21,6 +22,10 @@ const PlaceListScreen = ({ navigation }) => {
     });
   }, [navigation]);
   const places = useSelector((state) => state.places.places);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchdata());
+  }, [dispatch]);
   return (
     <FlatList
       data={places}
@@ -28,7 +33,7 @@ const PlaceListScreen = ({ navigation }) => {
       renderItem={(itemData) => (
         <PlaceItem
           title={itemData.item.title}
-          image={itemData.item.image}
+          image={itemData.item.imageUri}
           address={itemData.item.address}
           onSelect={() =>
             navigation.navigate("PlaceDetailsScreen", {
