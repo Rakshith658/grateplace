@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, Image, Alert } from "react-native";
 import colors from "../constant/colors";
 import * as ImagePicker from "expo-image-picker";
-import * as Permission from "expo-permissions";
+// import * as Permission from "expo-permissions";
 
 const IMPicker = ({ imageTaken }) => {
   //   const vrifipermission = async () => {
