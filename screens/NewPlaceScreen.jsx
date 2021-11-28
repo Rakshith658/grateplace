@@ -24,8 +24,8 @@ const NewPlaceScreen = ({ navigation, route }) => {
   }, [navigation]);
   const dispatch = useDispatch();
 
-  const Savehandler = () => {
-    dispatch(addPlace(Titlevalue, imageUri, location));
+  const Savehandler = async () => {
+    await dispatch(addPlace(Titlevalue, imageUri, location));
     setimageUri("");
     setTitlevalue("");
     navigation.goBack();
@@ -44,7 +44,10 @@ const NewPlaceScreen = ({ navigation, route }) => {
         <LocationPicker
           navigation={navigation}
           route={route}
-          onLocationPicked={(location) => setlocation(location)}
+          onLocationPicked={(location) => {
+            console.log(location, "ok");
+            setlocation(location);
+          }}
         />
         <Button title="Save" color={colors.primary} onPress={Savehandler} />
       </View>

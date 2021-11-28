@@ -16,15 +16,19 @@ const LocationPicker = ({ navigation, route, onLocationPicked }) => {
   const [selectedLocation, setselectedLocation] = useState(null);
 
   const pickedLocation = route.params?.pickedLocation;
+
   useEffect(() => {
     if (pickedLocation) {
       setselectedLocation({
         lat: pickedLocation.latitude,
         lng: pickedLocation.longitude,
       });
-      onLocationPicked(selectedLocation);
+      onLocationPicked({
+        lat: pickedLocation.latitude,
+        lng: pickedLocation.longitude,
+      });
     }
-  }, [pickedLocation, onLocationPicked]);
+  }, [pickedLocation]);
   const TakeUserLocation = async () => {
     setIsFetching(true);
     let { status } = await Location.requestForegroundPermissionsAsync();

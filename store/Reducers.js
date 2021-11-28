@@ -11,7 +11,10 @@ export default (state = initialState, action) => {
       const newPlace = new places(
         action.placeData.id.toString(),
         action.placeData.title,
-        action.placeData.image
+        action.placeData.image,
+        action.placeData.address,
+        action.placeData.lat,
+        action.placeData.lng
       );
       return {
         ...state,
@@ -22,7 +25,14 @@ export default (state = initialState, action) => {
         ...state,
         places: action.placeData.map(
           (place) =>
-            new places(place.id.toString(), place.title, place.imageUri)
+            new places(
+              place.id.toString(),
+              place.title,
+              place.imageUri,
+              place.address,
+              place.lat,
+              place.lng
+            )
         ),
       };
     default:
